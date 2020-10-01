@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
+import * as firebase from 'firebase';
+import Firestore = firebase.firestore.Firestore;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
   files: File[];
-  private subject = new Subject<any>();
-  constructor() { }
+  constructor(private fireStore: Firestore) { }
 
   saveImageFiles(files){
+    this.fireStore.collection("Images").add(files).then(res=>{
+      console.log('Posted');
+    },err=>{
+      console.log(err);
+    })
     this.files = files;
-    this.subject.next(files);
   }
 
   getImageFiles(){
-    return this.subject.asObservable();
+    return this.fireStore.collection("Images").snapshotChanges();
   }
 }

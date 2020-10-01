@@ -13,7 +13,7 @@ export class UploadComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  processFile(imageInput: any) {
-    this.appService.saveImageFiles(imageInput.files);
+  async processFile(imageInput: any) {
+    await this.appService.saveImageFiles(imageInput.files);
   }
 }
