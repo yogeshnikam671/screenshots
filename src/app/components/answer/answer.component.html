@@ -1,0 +1,27 @@
+<div class="search-wrapper" *ngIf="name===actualId">
+  <form class="form">
+    <mat-form-field class="form__searchInput">
+      <input
+        matInput
+        [name]="'ques'"
+        [type]="'search'"
+        [autocomplete]="'off'"
+        [(ngModel)]="answer"
+      />
+    </mat-form-field>
+    <button
+      mat-button class="form__button"
+      [color]="'primary'"
+      (click)="onClick()"
+    >
+      Add Answer
+    </button>
+  </form>
+
+  <div class="answers">
+    <span *ngFor="let result of answers" class="answers__p">
+       {{result}},&nbsp;
+    </span>
+  </div>
+
+</div>

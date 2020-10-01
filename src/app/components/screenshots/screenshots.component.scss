@@ -1,0 +1,9 @@
+.screenshots{
+  margin: auto;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  &__img{
+    margin: 20px 0px;
+  }
+}
