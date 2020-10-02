@@ -8,8 +8,9 @@ import {AppService} from '../app.service';
   styleUrls: ['./screenshots.component.scss']
 })
 export class ScreenshotsComponent implements OnInit {
-  ids: string[];
-  files: File[];
+  ids = [];
+  files: any;
+  downloadUrls = [];
   answerId: string;
   isVisible = false;
 
@@ -17,24 +18,28 @@ export class ScreenshotsComponent implements OnInit {
     private appService: AppService,
     private _cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getImageFileIds();
+  }
 
-  updateView(file){
-    const storage = firebase.storage();
-    const storageRef = storage.ref();
-    storageRef.child('images/'+ file.name).getDownloadURL().then(function(url){
-      console.log(file.name);
-      let img = document.getElementById(file.name);
+  updateView(){
+    this.downloadUrls.forEach((downloadURL, index) =>{
+      let image = document.getElementById(this.ids[index]);
       // @ts-ignore
-      img.src = url;
-    });
+      image.src = downloadURL;
+    })
   }
 
   getImageFileIds(){
-    const ids = Array.from(this.files)?.map(file=>{
-      return file.name;
-    });
-    return ids? ids: [];
+    this.appService.getImageFiles().subscribe(res=>{
+      this.files = res;
+      this.files.forEach(file=>{
+        this.downloadUrls.push(file.payload.doc.data().downloadURL);
+        this.ids.push(file.payload.doc.data().path.split('/')[1]);
+      })
+      this._cdr.detectChanges();
+      this.updateView();
+    })
   }
 
   viewAnswer(id: string) {

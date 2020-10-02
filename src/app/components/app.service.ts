@@ -43,6 +43,6 @@ export class AppService {
   }
 
   getImageFiles(){
-    return this.files;
+    return this.firestore.collection('files').snapshotChanges();
   }
 }
