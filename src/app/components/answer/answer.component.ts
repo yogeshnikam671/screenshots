@@ -23,10 +23,8 @@ export class AnswerComponent implements OnInit {
       answers.forEach(answer=>{
           if(answer.payload.doc.data()[this.name]){
             this.answers = answer.payload.doc.data()[this.name];
-            console.log('Got the answer !');
           }
       })
-      console.log("Answers",answers);
       if(answers.length !== 0){
         this.allAnswers = answers[0].payload.doc.data();
       }
@@ -37,7 +35,6 @@ export class AnswerComponent implements OnInit {
     if(this.answer && !this.allAnswers[this.name]?.includes(this.answer)){
       this.allAnswers[this.name] =
         this.allAnswers[this.name]? [...this.allAnswers[this.name], this.answer]: [this.answer];
-        console.log(this.allAnswers);
     }
     this.appService.saveAnswers(this.allAnswers);
     this.answers = this.allAnswers[this.name];

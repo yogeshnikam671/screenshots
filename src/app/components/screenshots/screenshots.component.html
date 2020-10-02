@@ -1,4 +1,22 @@
 <div class="screenshots">
+  <form class="form">
+    <mat-form-field class="form__searchInput">
+      <input
+        matInput
+        [name]="'ques'"
+        [type]="'search'"
+        [autocomplete]="'off'"
+        [(ngModel)]="ques"
+      />
+    </mat-form-field>
+    <button
+      mat-button class="form__button"
+      [color]="'primary'"
+      (click)="onClick()"
+    >
+      Search
+    </button>
+  </form>
   <div class="all" *ngFor="let id of ids">
   <img
     class="screenshots__img" [id]="id"

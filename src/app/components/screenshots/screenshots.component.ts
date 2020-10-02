@@ -13,10 +13,19 @@ export class ScreenshotsComponent implements OnInit {
   downloadUrls = [];
   answerId: string;
   isVisible = false;
+  ques: string;
+  answerBank: Object;
 
   constructor(
     private appService: AppService,
-    private _cdr: ChangeDetectorRef) {}
+    private _cdr: ChangeDetectorRef) {
+    this.appService.getAnswers().subscribe(answers=>{
+      if(answers.length !== 0){
+        this.answerBank = answers[0].payload.doc.data();
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.getImageFileIds();
@@ -45,5 +54,14 @@ export class ScreenshotsComponent implements OnInit {
   viewAnswer(id: string) {
       this.answerId = id;
       this.isVisible = !this.isVisible;
+  }
+
+  onClick() {
+    this.ids.forEach(id=>{
+      if(this.answerBank[id] && this.answerBank[id].includes(this.ques)){
+        const screenshot = document.getElementById(id);
+        screenshot.scrollIntoView();
+      }
+    })
   }
 }
