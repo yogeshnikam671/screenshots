@@ -1,25 +1,48 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
-import * as firebase from 'firebase';
-import Firestore = firebase.firestore.Firestore;
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+import { AngularFirestore } from '@angular/fire/firestore';
+import {Observable, Subject} from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
+  subject = new Subject();
+  observable = this.subject.asObservable();
   files: File[];
-  constructor(private fireStore: Firestore) { }
+  task: AngularFireUploadTask;
+  percentage: Observable<number>;
+  snapshot: Observable<any>;
+  downloadURL: string;
+  postId = 0;
+
+  constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { }
 
   saveImageFiles(files){
-    this.fireStore.collection("Images").add(files).then(res=>{
-      console.log('Posted');
-    },err=>{
-      console.log(err);
-    })
     this.files = files;
+    Array.from(files).forEach(file=>{
+      this.saveImageFile(file);
+    })
+    console.log('Posted');
+  }
+
+  saveImageFile(file){
+    const path = `images/${file.name}`;
+    const ref = this.storage.ref(path);
+    this.task = this.storage.upload(path, file);
+    this.percentage = this.task.percentageChanges();
+    this.task.snapshotChanges().subscribe(async(res) =>{
+      this.downloadURL = await ref.getDownloadURL().toPromise();
+      if(res.state === 'success'){
+        this.firestore.collection('files').add( { downloadURL: this.downloadURL, path }).then(res=>{
+          console.log('stored', this.downloadURL);
+        })
+      }
+    })
   }
 
   getImageFiles(){
-    return this.fireStore.collection("Images").snapshotChanges();
+    return this.files;
   }
 }

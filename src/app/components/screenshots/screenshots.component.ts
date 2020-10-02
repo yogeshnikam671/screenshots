@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import * as firebase from 'firebase';
 import {AppService} from '../app.service';
 
 @Component({
@@ -14,23 +15,19 @@ export class ScreenshotsComponent implements OnInit {
 
   constructor(
     private appService: AppService,
-    private _cdr: ChangeDetectorRef) {
-    this.appService.getImageFiles().subscribe(imageFiles=>{
-      this.files = imageFiles;
-      this.ids = this.getImageFileIds();
-      this._cdr.detectChanges();
-      this.updateView();
-    });
-  }
+    private _cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
-  updateView(){
-    this.ids.forEach((id, index)=>{
-      const image = document.getElementById(id);
+  updateView(file){
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+    storageRef.child('images/'+ file.name).getDownloadURL().then(function(url){
+      console.log(file.name);
+      let img = document.getElementById(file.name);
       // @ts-ignore
-      image.src = URL.createObjectURL(this.files[index]);
-    })
+      img.src = url;
+    });
   }
 
   getImageFileIds(){
