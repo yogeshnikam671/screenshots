@@ -2,7 +2,7 @@
   <div class="all" *ngFor="let id of ids">
   <img
     class="screenshots__img" [id]="id"
-    [width]="1000"
+    [width]="800"
     (click)="viewAnswer(id)">
     <app-answer *ngIf="isVisible" [name]="answerId" [actualId]="id"></app-answer>
   </div>

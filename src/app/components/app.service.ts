@@ -45,4 +45,14 @@ export class AppService {
   getImageFiles(){
     return this.firestore.collection('files').snapshotChanges();
   }
+
+  saveAnswers(answers){
+    this.firestore.collection('answers').add(answers).then(res=>{
+      console.log('Answer saved!');
+    })
+  }
+
+  getAnswers(){
+    return this.firestore.collection('answers').snapshotChanges();
+  }
 }

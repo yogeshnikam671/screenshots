@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
+import {AppService} from '../app.service';
 
 @Component({
   selector: 'app-answer',
@@ -14,26 +15,29 @@ export class AnswerComponent implements OnInit {
   allAnswers = {};
   answers = [];
 
-  constructor() {
+  constructor(private appService: AppService) {
   }
 
   ngOnInit(): void {
     this.allAnswers = JSON.parse(localStorage.getItem('answers'));
-    if(this.allAnswers === null){
-      this.allAnswers = {};
-    }else{
-    this.answers = this.allAnswers[this.name];
-    }
+    this.appService.getAnswers().subscribe(answers=>{
+      answers.forEach(answer=>{
+          if(answer.payload.doc.data()[this.name]){
+            this.answers = answer.payload.doc.data()[this.name];
+            console.log('Got the answer !');
+          }
+      })
+      this.allAnswers = answers[0].payload.doc.data();
+    })
   }
 
   onClick() {
     if(this.answer && !this.allAnswers[this.name]?.includes(this.answer)){
       this.allAnswers[this.name] =
         this.allAnswers[this.name]? [...this.allAnswers[this.name], this.answer]: [this.answer];
-      console.log(this.allAnswers);
-      localStorage.setItem('answers', JSON.stringify(this.allAnswers));
+        console.log(this.allAnswers);
     }
-    this.allAnswers = JSON.parse(localStorage.getItem('answers'));
+    this.appService.saveAnswers(this.allAnswers);
     this.answers = this.allAnswers[this.name];
   }
 }
