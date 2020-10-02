@@ -36,7 +36,7 @@ export class AnswerComponent implements OnInit {
   }
 
   onClick() {
-    if(this.answer && !this.allAnswers[this.name]?.includes(this.answer)){
+    if(this.answer){
       this.allAnswers[this.name] =
         this.allAnswers[this.name]? [...this.allAnswers[this.name], this.answer]: [this.answer];
       this.appService.saveAnswers(this.allAnswers);

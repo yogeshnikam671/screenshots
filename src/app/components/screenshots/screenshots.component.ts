@@ -57,8 +57,10 @@ export class ScreenshotsComponent implements OnInit {
   }
 
   onClick() {
+    console.log(this.ids);
     this.ids.forEach(id=>{
       if(this.answerBank[id] && this.isAvailable(this.answerBank[id])){
+        console.log(id);
         const screenshot = document.getElementById(id);
         screenshot.scrollIntoView();
       }
@@ -66,14 +68,19 @@ export class ScreenshotsComponent implements OnInit {
   }
 
   isAvailable(answers):boolean{
+    console.log(answers);
     let isFlag = false;
     const ans = answers;
     ans.forEach(entry =>{
-      const keywords = entry.split(' ');
-      if(keywords.includes(this.ques)){
-        console.log('YESS');
+      const keyword = entry.toString();
+      if(keyword.includes(this.ques)){
+        console.log('YESH');
         isFlag = true;
       }
+      // if(keywords.includes(this.ques)){
+      //   console.log('YESS');
+      //   isFlag = true;
+      // }
     })
     return isFlag;
   }
