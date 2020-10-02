@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {Observable, Subject} from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,9 @@ export class AppService {
   downloadURL: string;
   postId = 0;
 
-  constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) { }
+  constructor(private firestore: AngularFirestore,
+              private storage: AngularFireStorage,
+              private imageCompress: NgxImageCompressService) { }
 
   saveImageFiles(files){
     this.files = files;
@@ -33,6 +35,7 @@ export class AppService {
     this.task = this.storage.upload(path, file);
     this.percentage = this.task.percentageChanges();
     this.task.snapshotChanges().subscribe(async(res) =>{
+      this.subject.next({done: res.bytesTransferred, total: res.totalBytes})
       this.downloadURL = await ref.getDownloadURL().toPromise();
       if(res.state === 'success'){
         this.firestore.collection('files').add( { downloadURL: this.downloadURL, path }).then(res=>{
@@ -55,4 +58,5 @@ export class AppService {
   getAnswers(){
     return this.firestore.collection('answers').snapshotChanges();
   }
+
 }

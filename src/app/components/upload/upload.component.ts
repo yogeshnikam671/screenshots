@@ -7,7 +7,13 @@ import {AppService} from '../app.service';
   styleUrls: ['./upload.component.scss']
 })
 export class UploadComponent implements OnInit {
+  done: number;
+  total: number;
   constructor(private appService:AppService){
+    this.appService.subject.subscribe((uploadObj:any)=>{
+      this.done = uploadObj.done;
+      this.total = uploadObj.total;
+    })
   }
 
   ngOnInit(): void {

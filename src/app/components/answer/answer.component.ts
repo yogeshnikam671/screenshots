@@ -19,7 +19,6 @@ export class AnswerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.allAnswers = JSON.parse(localStorage.getItem('answers'));
     this.appService.getAnswers().subscribe(answers=>{
       answers.forEach(answer=>{
           if(answer.payload.doc.data()[this.name]){
@@ -27,7 +26,10 @@ export class AnswerComponent implements OnInit {
             console.log('Got the answer !');
           }
       })
-      this.allAnswers = answers[0].payload.doc.data();
+      console.log("Answers",answers);
+      if(answers.length !== 0){
+        this.allAnswers = answers[0].payload.doc.data();
+      }
     })
   }
 

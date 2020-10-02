@@ -1,7 +1,9 @@
 .search-wrapper{
-  margin-left: 100px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
   width: 800px;
-  padding: 10px 50px;
+  padding: 10px 0px;
   font-weight: lighter;
   @media only screen and (max-width: 425px){
     width: auto;
@@ -13,7 +15,7 @@
   width: fit-content;
   display: flex;
   align-items: center;
-
+  margin-bottom: 30px;
   @media only screen and (max-width: 425px){
     justify-content: space-around;
     flex-wrap: wrap;
@@ -55,7 +57,7 @@
 
 .answers{
   &__p{
-    font-size: 18px;
+    font-size: 30px;
     @media only screen and (max-width: 425px){
       font-size: 25px;
     }
