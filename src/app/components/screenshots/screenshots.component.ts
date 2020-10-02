@@ -73,14 +73,10 @@ export class ScreenshotsComponent implements OnInit {
     const ans = answers;
     ans.forEach(entry =>{
       const keyword = entry.toString();
-      if(keyword.includes(this.ques)){
+      if(keyword.includes(this.ques.toLowerCase())){
         console.log('YESH');
         isFlag = true;
       }
-      // if(keywords.includes(this.ques)){
-      //   console.log('YESS');
-      //   isFlag = true;
-      // }
     })
     return isFlag;
   }

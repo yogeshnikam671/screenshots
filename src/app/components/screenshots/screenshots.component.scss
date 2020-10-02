@@ -8,6 +8,12 @@
   }
   &__img{
     margin: 20px 0px;
+    @media only screen and (max-width: 425px){
+      margin: 50px 0px;
+      transform: scale(1.5);
+      height: 300px;
+      margin-left: 366px;
+    }
   }
   .form{
     width: fit-content;
@@ -17,6 +23,8 @@
     @media only screen and (max-width: 425px){
       justify-content: space-around;
       flex-wrap: wrap;
+      margin-left: -225px;
+      margin-bottom: 100px;
     }
     &__searchInput{
       width: 500px;
@@ -25,7 +33,7 @@
       @media only screen and (max-width: 425px){
         font-size: 25px;
         input.mat-input-element{
-          padding-top: 200px;
+          padding-top: 100px;
         }
       }
     }

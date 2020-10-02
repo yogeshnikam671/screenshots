@@ -9,6 +9,8 @@
     width: auto;
     left: 0;
     top: 0;
+    margin-left: -60px;
+    height: 400px;
   }
 }
 .form{
@@ -19,6 +21,8 @@
   @media only screen and (max-width: 425px){
     justify-content: space-around;
     flex-wrap: wrap;
+    flex-flow: column;
+    margin-right: 160px;
   }
   &__searchInput{
     width: 500px;
@@ -27,7 +31,7 @@
     @media only screen and (max-width: 425px){
       font-size: 25px;
       input.mat-input-element{
-        padding-top: 200px;
+        padding-top: 50px;
       }
     }
   }
@@ -56,6 +60,10 @@
 }
 
 .answers{
+  @media only screen and (max-width: 425px){
+    margin-left: -300px;
+    margin-top: 30px;
+  }
   &__p{
     font-size: 30px;
     @media only screen and (max-width: 425px){
