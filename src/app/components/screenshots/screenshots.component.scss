@@ -6,4 +6,47 @@
   &__img{
     margin: 20px 0px;
   }
+  .form{
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    margin: 30px 0px;
+    @media only screen and (max-width: 425px){
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    &__searchInput{
+      width: 500px;
+      font-size: 20px;
+      font-weight: lighter;
+      @media only screen and (max-width: 425px){
+        font-size: 25px;
+        input.mat-input-element{
+          padding-top: 200px;
+        }
+      }
+    }
+    &__button{
+      margin-left: 30px;
+      height: fit-content;
+      color: black;
+      font-size: 18px;
+
+      @media only screen and (max-width: 425px) {
+        margin-top: 20px !important;
+        border: 1px solid lavender !important;
+        background: aliceblue !important;
+        font-weight: normal !important;
+        height: 70px;
+        width: 180px;
+      }
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-infix{
+      padding: 10px 15px;
+    }
+    .mat-button.mat-primary{
+      color: black;
+      font-weight: lighter;
+    }
+  }
 }

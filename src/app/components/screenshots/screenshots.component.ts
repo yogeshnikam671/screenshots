@@ -58,10 +58,23 @@ export class ScreenshotsComponent implements OnInit {
 
   onClick() {
     this.ids.forEach(id=>{
-      if(this.answerBank[id] && this.answerBank[id].includes(this.ques)){
+      if(this.answerBank[id] && this.isAvailable(this.answerBank[id])){
         const screenshot = document.getElementById(id);
         screenshot.scrollIntoView();
       }
     })
+  }
+
+  isAvailable(answers):boolean{
+    let isFlag = false;
+    const ans = answers;
+    ans.forEach(entry =>{
+      const keywords = entry.split(' ');
+      if(keywords.includes(this.ques)){
+        console.log('YESS');
+        isFlag = true;
+      }
+    })
+    return isFlag;
   }
 }
