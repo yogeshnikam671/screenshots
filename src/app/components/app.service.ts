@@ -50,8 +50,8 @@ export class AppService {
   }
 
   saveAnswers(answers){
-    this.firestore.collection('answers').add(answers).then(res=>{
-      console.log('Answer saved!');
+    this.firestore.collection('answers').doc('all').set(answers).then(res=>{
+      console.log('Saved');
     })
   }
 
